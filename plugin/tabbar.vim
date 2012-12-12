@@ -27,6 +27,8 @@ else
       let Tb_loaded= 1
 endif "%%
 
+let s:running_windows = has("win16") || has("win32") || has("win64")
+
 
 " Debug Level ~~
 "   0 = no logging
@@ -80,14 +82,16 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
             inoremap <unique> <script> <M-0> <esc>:call <SID>Bf_SwitchTo( 10)<CR>:<BS>a
       else
             "NORMAL mode bindings for vim( dos32 )
-            noremap <unique> <script> ± :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
-            noremap <unique> <script> ² :call <SID>Bf_SwitchTo( 2)<CR>:<BS>
-            noremap <unique> <script> ³ :call <SID>Bf_SwitchTo( 3)<CR>:<BS>
-            noremap <unique> <script> ´ :call <SID>Bf_SwitchTo( 4)<CR>:<BS>
-            noremap <unique> <script> µ :call <SID>Bf_SwitchTo( 5)<CR>:<BS>
-            noremap <unique> <script> ¶ :call <SID>Bf_SwitchTo( 6)<CR>:<BS>
-            noremap <unique> <script> · :call <SID>Bf_SwitchTo( 7)<CR>:<BS>
-            noremap <unique> <script> ¸ :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
+            if s:running_windows
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 2)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 3)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 4)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 5)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 6)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 7)<CR>:<BS>
+                noremap <unique> <script> ? :call <SID>Bf_SwitchTo( 8)<CR>:<BS>
+            endif
       "else
             "NORMAL mode bindings for vim( terminal)
             noremap <unique> <script> 1 :call <SID>Bf_SwitchTo( 1)<CR>:<BS>
@@ -672,8 +676,8 @@ function! <SID>Win_FindOrCreate(bufName, forceEdge, isExplorer)
     let l:winFound = 1
   else
 
-        "if g:Tb_SplitToEdge == 1 || a:forceEdge >= 0
-        if a:forceEdge >= 0
+        if g:Tb_SplitToEdge == 1 || a:forceEdge >= 0
+        "if a:forceEdge >= 0
 
             let l:edge = &splitbelow
             if a:forceEdge >= 0
